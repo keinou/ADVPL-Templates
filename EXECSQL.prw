@@ -470,7 +470,7 @@ oSelect := TSimpleEditor():Create( oSplit )
 oSelect:oFont := oFCour14
 oSelect:TextFormat(1)
 /* Rafael Karczevski 17/07/2020 */
-oSelect:bChanged := {|| MapColor() } 
+//oSelect:bChanged := {|| MapColor() } 
 // oSelect:TextFamily( "Courier New" )
 // oSelect:TextSize( 8 )
 
@@ -1891,8 +1891,31 @@ Return cResultado
 /*/
 Static Function MapColor()
 
+	Local nX
+	Local aDados := {}
+	Local cColBlu := "#2467d4"
+	Local cColTag := "#2e4469"
+
+	aAdd(aDados, {"AND"		,cColBlu})
+	aAdd(aDados, {"SELECT"	,cColBlu})
+	aAdd(aDados, {"FROM"	,cColBlu})
+	aAdd(aDados, {"OR"		,cColBlu})
+	aAdd(aDados, {"("		,cColTag})
+	aAdd(aDados, {")"		,cColTag})
+	aAdd(aDados, {"="		,cColTag})
+	aAdd(aDados, {"<"		,cColTag})
+	aAdd(aDados, {">"		,cColTag})
+	aAdd(aDados, {"-"		,cColTag})
+	aAdd(aDados, {"+"		,cColTag})
+	aAdd(aDados, {"."		,cColTag})
+	aAdd(aDados, {","		,cColTag})
+	aAdd(aDados, {"*"		,cColTag})
+	aAdd(aDados, {"/"		,cColTag})
+
 	IF oSelect <> Nil
-		oSelect:Load( StrTran(oSelect:RetText(), "AND", "<font color=rgb(0,58,255)>AND</font>") )
+		For nX := 1 to Len(aDados)
+			oSelect:Load( StrTran(oSelect:RetText(), aDados[nX][1], "<font color=" + aDados[nX][2] + ">" + aDados[nX][1] + "</font>") )
+		Next
 	EndIf
 
 Return
